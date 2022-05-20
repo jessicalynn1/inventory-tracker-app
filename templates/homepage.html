@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+
+{% block title %} Chris's Custom Designs {% endblock %}
+
+{% block body %}
+
+
+    <body>
+    <section>
+    <div class="container">
+    <h2> What would you like to do? </h2>
+    
+    <p> <a href="/view_inventory" > <button class="button"> View all inventory items and warehouse locations </button></a> </p>
+    <br>
+
+    <p> <a href="/create_inventory" > <button class="button"> Create new inventory item </button></a> </p>
+    <br>
+
+    <p> <a href=/create_warehouse > <button class="button"> Create new warehouse location </button></a> </p>
+    <br>
+
+    <p> <a href=/edit_inventory > <button class="button"> Edit existing inventory item </button></a> </p>
+    <br>
+
+    <p> <a href=/delete_inventory > <button class="button"> Delete inventory item </button></a> </p>
+    <br>
+
+{% endblock %}

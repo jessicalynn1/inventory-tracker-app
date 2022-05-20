@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<body>
+<section id="inventory-list">
+    <div class="container">
+    <h1>Which inventory item would you like to delete?</h1>
+    <form action="commit_delete" method="POST">
+    <br>
+    <select name="deleted">
+    {% for item in inventory_table %}
+    <option value="{{item.name}}" SELECTED> {{ item.name }}</option>
+    {% endfor %}
+    </select>
+  </section>
+  <br>
+  <h4>Once you have made your selection, please hit the submit button.</h4>
+
+  <p><input type="submit" value="Submit"></p>
+</form>
+</div>

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<body>
+<section id="inventory-list">
+    <div class="container">
+    <h1>Which inventory item would you like to edit?</h1>
+    <form action="commit_edit" method="POST">
+    <br>
+    <select name="deleted">
+    {% for item in inventory_table %}
+    <option value="{{item.product_code}}" SELECTED> {{ item.product_code }}</option>
+    {% endfor %}
+    </select>
+  </section>
+  <br>
+  <h3>Please fill out the form below to make your changes.</h3>
+  <form action="commit_inventory" method="POST">
+    Product code
+    <input type="text" name="product-code">
+    <br>
+     Name
+    <input type="text" name="name">
+    <br>
+    Description
+    <input type="text" name="description">
+    <br>
+    Quantity
+    <input type="text" name="quantity">
+    <br>
+    Warehouse
+    <select name="warehouse">
+     {% for item in warehouse_table %}
+     <option value="{{item.name}}" SELECTED> {{ item.name }}</option>
+     {% endfor %}
+   </select>
+   <br>
+  <h4>Once you have completed the form, please hit the submit button.</h4>
+
+  <p><input type="submit" value="Submit"></p>
+</form>
+</div>

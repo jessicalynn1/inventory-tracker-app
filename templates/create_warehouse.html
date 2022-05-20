@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+
+{% block title %} Chris's Custom Designs {% endblock %}
+
+{% block body %}
+
+<body>
+    <section>
+    <div class="container">
+            <h4>Please fill out the form below to create a new warehouse location.</h4>
+             <br>
+             <section id="warehouse-table">
+              <h1>List of warehouses</h1>
+              <ol id="warehouse-table">
+              {% for item in warehouse_table %}
+              <li> {{ item.name }} </li>
+              {% endfor %}
+            </section>
+        </div>
+          <br>
+          <br>
+          <form action="commit_warehouse" method="POST">
+          <div>
+          Add a new warehouse
+          <input type="text" name="location">
+          <br>
+            <br>
+    <h4>Once you have inputted a new warehouse location, please hit the submit button.</h4>
+
+    <p><input type="submit" value="Submit"></p>
+  </form>
+</section>
+  </div>
+</body>
+{% endblock %}

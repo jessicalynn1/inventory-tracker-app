@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+
+{% block title %} Chris's Custom Designs {% endblock %}
+
+{% block body %}
+
+<body>
+    <section>
+    <div class="container">
+            <h4>Please fill out the form below to create a new inventory item.</h4>
+
+            <form action="commit_inventory" method="POST">
+             Product code
+             <input type="text" name="product-code">
+             <br>
+              Name
+             <input type="text" name="name">
+             <br>
+             Description
+             <input type="text" name="description">
+             <br>
+             Quantity
+             <input type="text" name="quantity">
+             <br>
+             Warehouse
+             <select name='warehouse'>
+              {% for item in warehouse_table %}
+              <option value="{{item.name}}" SELECTED> {{ item.name }}</option>
+              {% endfor %}
+            </select>
+            <br>
+    <h4>Once you have completed the form, please hit the submit button.</h4>
+
+    <p><input type="submit" value="Submit"></p>
+  </form>
+  </div>
+</body>
+{% endblock %}
