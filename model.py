@@ -34,12 +34,14 @@ class Warehouse(db.Model):
     id = db.Column(db.Integer,
                         autoincrement=True,
                         primary_key=True)
-    name = db.Column(db.String, unique=True)
-    weather = db.Column(db.String, unique=False, Nullable=False) 
+    city = db.Column(db.String, unique=True)
+    state = db.Column(db.String, unique=False)
+    country = db.Column(db.String, unique=False)
+    weather = db.Column(db.String, unique=False) 
 
 
     def __repr__(self):
-        return f'<Warehouse id={self.id} name={self.name}>'
+        return f'<Warehouse id={self.id} name={self.name} weather={self.weather}>'
 
 
 
