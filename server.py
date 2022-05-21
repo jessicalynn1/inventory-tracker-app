@@ -40,10 +40,20 @@ def commit_inventory():
     quantity = request.form.get("quantity")
     warehouse_name = request.form.get("warehouse")
     warehouse_id = Warehouse.query.filter_by(name=warehouse_name).first()
+    api_key = "b61401ee0365e42673899dda2db91f00"
+    limit = 5
 
     new_product = Inventory(product_code=product_code, name=name, description=description, quantity=quantity, warehouse_id=warehouse_id.id)
     db.session.add(new_product)
     db.session.commit()
+
+    location = requests.get('http://api.openweathermap.org/geo/1.0/direct?q={warehouse_name}&limit={limit}&appid={api_key}')
+    location = location.json()
+    pprint(location)
+    # this saves the weather data in the warehouse database
+    # city = Warehouse(name=warehouse_name, weather=weather)
+    # db.session.add(city)
+    # db.session.commit()
            
     return redirect("/")
 
@@ -135,9 +145,35 @@ def view_inventory():
     
     inventory_table = Inventory.query.all()
     warehouse_table = Warehouse.query.all()
+    # api_key = "b61401ee0365e42673899dda2db91f00"
+    # limit = 5
 
+    #this will get me a list of all the warehouse city locations
+    for item in warehouse_table:
+        name = item.name
+        warehouse_name = Warehouse.query.filter_by(name=name).all()
+    
+        return warehouse_name
+
+    # location = requests.get('http://api.openweathermap.org/geo/1.0/direct?q={warehouse_name}&limit={limit}&appid={api_key}')
+    # location = location.json()
+    # pprint(location)
+    # lat = location["lat"]
+    # lon = location["lon"]
+
+    # weather = requests.get('https://api.openweathermap.org/data/2.5/weather?lat={lat}&lon={lon}&appid={93b423527d6806d147c30e1558064431}')
+    # response = weather.json()
+    # desc = response[weather]    #this is a list of dictionaries
+    # desc = desc["description"] 
+
+
+    # this saves the weather data in the warehouse database
+    # city = Warehouse(name=warehouse_name, weather=weather)
+    # db.session.add(city)
+    # db.session.commit()
            
     return render_template("view_inventory.html", inventory_table=inventory_table, warehouse_table=warehouse_table)
+
 
 
 

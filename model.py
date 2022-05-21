@@ -34,10 +34,8 @@ class Warehouse(db.Model):
     id = db.Column(db.Integer,
                         autoincrement=True,
                         primary_key=True)
-    city = db.Column(db.String, unique=True)
-    state = db.Column(db.String, unique=False)
-    country = db.Column(db.String, unique=False)
-    weather = db.Column(db.String, unique=False) 
+    name = db.Column(db.String, unique=True)
+    # weather = db.Column(db.String, unique=False) 
 
 
     def __repr__(self):
