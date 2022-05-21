@@ -35,16 +35,16 @@ class Warehouse(db.Model):
                         autoincrement=True,
                         primary_key=True)
     name = db.Column(db.String, unique=True)
-    # weather = db.Column(db.String, unique=False) 
+    lat = db.Column(db.String, unique=False)
+    lon = db.Column(db.String, unique=False)
 
 
     def __repr__(self):
-        return f'<Warehouse id={self.id} name={self.name} weather={self.weather}>'
+        return f'<Warehouse name={self.name} lat={self.lat} lon={self.lon}>'
 
 
 
-
-def connect_to_db(app, db_uri="postgresql://popkjngt:VvqKa5kCap5HUaVA0DapnqqOVf6RHSxV@heffalump.db.elephantsql.com/popkjngt", echo=False):
+def connect_to_db(app, db_uri="postgresql://uiwlourb:odc7PVKamKq2rPxrqjzoD8-yGnafmrAb@heffalump.db.elephantsql.com/uiwlourb", echo=False):
     """Connect the database to the Flask app."""
 
     app.config["SQLALCHEMY_DATABASE_URI"] = db_uri
