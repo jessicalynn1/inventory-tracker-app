@@ -6,15 +6,10 @@
     <h1>List of inventory items</h1>
     <ol id="inventory-list">
     {% for item in inventory_table %}
-    <li> {{ item.name }} located in (city) </li>
+    <li> {{ item.name }} located in </li>
+    {% for k, v in weather_dict.items() %}
+    <li> {{ k }}: current weather is {{ v }} </li>
     {% endfor %}
-  </section>
-
-  <section id="warehouse-list">
-    <h1>List of warehouses</h1>
-    <ol id="warehouse-list">
-    {% for item in warehouse_table %}
-    <li> {{ item.name }} - current weather is {{item.lat}} {{item.lon}}</li>
     {% endfor %}
   </section>
 

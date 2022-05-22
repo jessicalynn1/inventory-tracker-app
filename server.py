@@ -152,19 +152,30 @@ def view_inventory():
     
     inventory_table = Inventory.query.all()
     warehouse_table = Warehouse.query.all()
-    coordinates = Warehouse.query.filter_by()  #need to query the table to get lat and lon
+    warehouse_id = Warehouse.query.with_entities(Warehouse.id).all()
+    inventory_obj = Inventory.query.filter_by(warehouse_id=warehouse_id).all()
+    coordinates = Warehouse.query.with_entities(Warehouse.name, Warehouse.lat, Warehouse.lon).all()
 
-    # api_key = "93b423527d6806d147c30e1558064431"
-    # lat = warehouse_table['lat']
-    # lon = warehouse_table['lon']
+    api_key = "93b423527d6806d147c30e1558064431"
 
-    # weather = requests.get(f'https://api.openweathermap.org/data/2.5/weather?lat={lat}&lon={lon}&appid={api_key}')
-    # response = weather.json()
-    # description = response[0][weather]
+    weather_dict = {}
 
+    for obj in inventory_obj:
+        product_name = obj.inventory.name
+        # print(product_name)
 
+    for item in coordinates:
+        name = item[0]
+        lat = item[1]
+        lon = item[2]
+
+        weather = requests.get(f'https://api.openweathermap.org/data/2.5/weather?lat={lat}&lon={lon}&appid={api_key}')
+        response = weather.json()
+        description = response['weather'][0]['description']
+        weather_dict[name] = description
+        
            
-    return render_template("view_inventory.html", inventory_table=inventory_table, warehouse_table=warehouse_table)
+    return render_template("view_inventory.html", inventory_table=inventory_table, warehouse_table=warehouse_table, weather_dict=weather_dict)
 
 
 
