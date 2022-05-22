@@ -14,7 +14,7 @@
     <h1>List of warehouses</h1>
     <ol id="warehouse-list">
     {% for item in warehouse_table %}
-    <li> {{ item.name }} - current weather is (description)</li>
+    <li> {{ item.name }} - current weather is {{item.lat}} {{item.lon}}</li>
     {% endfor %}
   </section>
 

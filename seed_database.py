@@ -18,10 +18,6 @@ CITIES = ["Denver", "San Jose", "Philadelphia", "Atlanta", "Chicago"]
 api_key = "b61401ee0365e42673899dda2db91f00"
 limit = 1
 
-# location = requests.get(f'http://api.openweathermap.org/geo/1.0/direct?q={warehouse_name}&limit={limit}&appid={api_key}')
-# location = location.json()
-# lat = location["lat"]
-# lon = location["lon"]
 
 for city in CITIES:
 

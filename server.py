@@ -128,9 +128,16 @@ def commit_warehouse():
     
     location = request.form.get("location")
     db_location = Warehouse.query.filter_by(name=location).first()
+    api_key = "b61401ee0365e42673899dda2db91f00"
+    limit = 1
+
+    city = requests.get(f'http://api.openweathermap.org/geo/1.0/direct?q={location}&limit={limit}&appid={api_key}')
+    city = city.json()
+    lat = city[0]["lat"]
+    lon = city[0]["lon"]
 
     if not db_location:
-        warehouse_location = Warehouse(name=location)
+        warehouse_location = Warehouse(name=location, lat=lat, lon=lon)
         db.session.add(warehouse_location)
         db.session.commit()
     else:
@@ -145,32 +152,17 @@ def view_inventory():
     
     inventory_table = Inventory.query.all()
     warehouse_table = Warehouse.query.all()
-    # api_key = "b61401ee0365e42673899dda2db91f00"
-    # limit = 5
+    coordinates = Warehouse.query.filter_by()  #need to query the table to get lat and lon
 
-    #this will get me a list of all the warehouse city locations
-    for item in warehouse_table:
-        name = item.name
-        warehouse_name = Warehouse.query.filter_by(name=name).all()
-    
-        return warehouse_name
+    # api_key = "93b423527d6806d147c30e1558064431"
+    # lat = warehouse_table['lat']
+    # lon = warehouse_table['lon']
 
-    # location = requests.get('http://api.openweathermap.org/geo/1.0/direct?q={warehouse_name}&limit={limit}&appid={api_key}')
-    # location = location.json()
-    # pprint(location)
-    # lat = location["lat"]
-    # lon = location["lon"]
-
-    # weather = requests.get('https://api.openweathermap.org/data/2.5/weather?lat={lat}&lon={lon}&appid={93b423527d6806d147c30e1558064431}')
+    # weather = requests.get(f'https://api.openweathermap.org/data/2.5/weather?lat={lat}&lon={lon}&appid={api_key}')
     # response = weather.json()
-    # desc = response[weather]    #this is a list of dictionaries
-    # desc = desc["description"] 
+    # description = response[0][weather]
 
 
-    # this saves the weather data in the warehouse database
-    # city = Warehouse(name=warehouse_name, weather=weather)
-    # db.session.add(city)
-    # db.session.commit()
            
     return render_template("view_inventory.html", inventory_table=inventory_table, warehouse_table=warehouse_table)
 
