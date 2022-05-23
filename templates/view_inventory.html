@@ -4,13 +4,11 @@
 <body>
 <section id="inventory-list">
     <h1>List of inventory items</h1>
-    <ol id="inventory-list">
-    {% for item in inventory_table %}
-    <li> {{ item.name }} located in </li>
-    {% for k, v in weather_dict.items() %}
-    <li> {{ k }}: current weather is {{ v }} </li>
-    {% endfor %}
-    {% endfor %}
+    <ul id="inventory-list">
+      {% for item in inventory_table %}
+      <li> {{ item.name }} located in {{ item.warehouse.name }}; current weather is: {{weather}} </li>
+
+      {% endfor %}
   </section>
 
 </body>

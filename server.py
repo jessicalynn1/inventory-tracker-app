@@ -150,36 +150,53 @@ def commit_warehouse():
 def view_inventory():
     """Allows user to search for inventory items"""
     
+
     inventory_table = Inventory.query.all()
     warehouse_table = Warehouse.query.all()
-    warehouse_id = Warehouse.query.with_entities(Warehouse.id).all()
-    inventory_obj = Inventory.query.filter_by(warehouse_id=warehouse_id).all()
     coordinates = Warehouse.query.with_entities(Warehouse.name, Warehouse.lat, Warehouse.lon).all()
 
     api_key = "93b423527d6806d147c30e1558064431"
 
     weather_dict = {}
 
-    for obj in inventory_obj:
-        product_name = obj.inventory.name
-        # print(product_name)
-
-    for item in coordinates:
-        name = item[0]
-        lat = item[1]
-        lon = item[2]
+    for obj in inventory_table:
+        product_name = obj.name
+        city_name = obj.warehouse.name
+        lat = obj.warehouse.lat
+        lon = obj.warehouse.lon
 
         weather = requests.get(f'https://api.openweathermap.org/data/2.5/weather?lat={lat}&lon={lon}&appid={api_key}')
         response = weather.json()
-        description = response['weather'][0]['description']
-        weather_dict[name] = description
-        
+
+        if city_name == response["name"]:
+            description = response['weather'][0]['description']
+            weather_dict[city_name] = description
+    
+        for key, value in weather_dict.items():
+            if key == city_name:
+                weather = value        
+
+    print(weather)
            
-    return render_template("view_inventory.html", inventory_table=inventory_table, warehouse_table=warehouse_table, weather_dict=weather_dict)
-
-
+    return render_template("view_inventory.html", inventory_table=inventory_table, weather=weather)
 
 
 if __name__ == "__main__":
     connect_to_db(app)
     app.run(host="0.0.0.0", debug=True)
+
+
+
+
+
+        
+    # class FullInventory:
+    #     """Creates an object that has information from both inventory table and warehouse table."""
+    #     def __init__(self, product_name, city_name, description):
+
+    #         self.pname = product_name
+    #         self.cname = city_name
+    #         self.desc = description
+        
+    #     def create_instance(self):
+    #         """Puts all the info into one object"""
