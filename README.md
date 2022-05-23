@@ -6,8 +6,8 @@ Chris's Custom Designs is built with Python Flask on the backend with a PostgreS
 
 
 ## Features 
-#### View all inventory and warehouse locations  
-Users can view all inventory and warehouse locations.
+#### View all inventory  
+Users can view all inventory, including their warehouse locations and current weather.
 
 
 
@@ -49,7 +49,7 @@ Database:
 ## Getting Started  
 Please read through and follow the steps below to get the app running.
 To download and use Chris's Custom Designs please follow these instructions:
-1. Navigate to my Replit file: https://replit.com/@JessicaF1/shopify-backend-takehome-1#server.py
+1. Navigate to my Replit file: https://github.com/jessicalynn1/inventory-tracker-app
 2. Click the green 'Run' button
 
 
