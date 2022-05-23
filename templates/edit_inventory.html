@@ -9,7 +9,7 @@
     <br>
     <select name="deleted">
     {% for item in inventory_table %}
-    <option value="{{item.product_code}}" SELECTED> {{ item.product_code }}</option>
+    <option value="{{item.name}}" SELECTED> {{ item.name }}</option>
     {% endfor %}
     </select>
   </section>

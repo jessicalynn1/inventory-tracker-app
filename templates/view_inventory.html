@@ -7,7 +7,6 @@
     <ul id="inventory-list">
       {% for item in inventory_table %}
       <li> {{ item.name }} located in {{ item.warehouse.name }}; current weather is: {{weather}} </li>
-
       {% endfor %}
   </section>
 

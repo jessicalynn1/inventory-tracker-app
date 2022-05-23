@@ -73,8 +73,7 @@ def commit_edit():
     """Allows user to edit an existing inventory item"""
     
     deleted = request.form.get("deleted")
-    item = Inventory.query.filter_by(product_code=deleted).first()
-    print(item)
+    item = Inventory.query.filter_by(name=deleted).first()
     db.session.delete(item)
     db.session.commit()
 
@@ -176,7 +175,6 @@ def view_inventory():
             if key == city_name:
                 weather = value        
 
-    print(weather)
            
     return render_template("view_inventory.html", inventory_table=inventory_table, weather=weather)
 
@@ -188,7 +186,7 @@ if __name__ == "__main__":
 
 
 
-
+#Tried to use a class to connect the city with the inventory item and the weather
         
     # class FullInventory:
     #     """Creates an object that has information from both inventory table and warehouse table."""
