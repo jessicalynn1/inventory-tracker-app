@@ -49,7 +49,7 @@ Database:
 ## Getting Started  
 Please read through and follow the steps below to get the app running.
 To download and use Chris's Custom Designs please follow these instructions:
-1. Navigate to my Replit file: https://github.com/jessicalynn1/inventory-tracker-app
+1. Navigate to my Replit file: https://replit.com/@JessicaF1/inventory-tracker-app-1#main.py
 2. Click the green 'Run' button
 
 
