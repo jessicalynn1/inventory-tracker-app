@@ -37,6 +37,7 @@ class Warehouse(db.Model):
     name = db.Column(db.String, unique=True)
     lat = db.Column(db.String, unique=False)
     lon = db.Column(db.String, unique=False)
+    weather = db.Column(db.String, unique=False)
 
 
     def __repr__(self):

@@ -12,6 +12,8 @@ from pprint import pprint
 app = Flask(__name__, static_url_path='/static') 
 app.secret_key = "dev"
 app.jinja_env.undefined = StrictUndefined
+api_key = os.environ["API_KEY"]
+api_key_2 = os.environ["API_KEY_2"]
 
 
 @app.route("/")
@@ -40,21 +42,12 @@ def commit_inventory():
     quantity = request.form.get("quantity")
     warehouse_name = request.form.get("warehouse")
     warehouse_id = Warehouse.query.filter_by(name=warehouse_name).first()
-    api_key = "b61401ee0365e42673899dda2db91f00"
-    limit = 5
 
     new_product = Inventory(product_code=product_code, name=name, description=description, quantity=quantity, warehouse_id=warehouse_id.id)
     db.session.add(new_product)
     db.session.commit()
 
-    location = requests.get('http://api.openweathermap.org/geo/1.0/direct?q={warehouse_name}&limit={limit}&appid={api_key}')
-    location = location.json()
-    pprint(location)
-    # this saves the weather data in the warehouse database
-    # city = Warehouse(name=warehouse_name, weather=weather)
-    # db.session.add(city)
-    # db.session.commit()
-           
+
     return redirect("/")
 
 
@@ -127,7 +120,6 @@ def commit_warehouse():
     
     location = request.form.get("location")
     db_location = Warehouse.query.filter_by(name=location).first()
-    api_key = "b61401ee0365e42673899dda2db91f00"
     limit = 1
 
     city = requests.get(f'http://api.openweathermap.org/geo/1.0/direct?q={location}&limit={limit}&appid={api_key}')
@@ -151,32 +143,21 @@ def view_inventory():
     
 
     inventory_table = Inventory.query.all()
-    warehouse_table = Warehouse.query.all()
-    coordinates = Warehouse.query.with_entities(Warehouse.name, Warehouse.lat, Warehouse.lon).all()
-
-    api_key = "93b423527d6806d147c30e1558064431"
-
-    weather_dict = {}
-
+    
     for obj in inventory_table:
-        product_name = obj.name
         city_name = obj.warehouse.name
         lat = obj.warehouse.lat
         lon = obj.warehouse.lon
 
-        weather = requests.get(f'https://api.openweathermap.org/data/2.5/weather?lat={lat}&lon={lon}&appid={api_key}')
+        weather = requests.get(f'https://api.openweathermap.org/data/2.5/weather?lat={lat}&lon={lon}&appid={api_key_2}')
         response = weather.json()
+        description = response['weather'][0]['description']
 
-        if city_name == response["name"]:
-            description = response['weather'][0]['description']
-            weather_dict[city_name] = description
-    
-        for key, value in weather_dict.items():
-            if key == city_name:
-                weather = value        
+        model.Warehouse.query.filter_by(name=city_name).update(dict(weather=description))
+        model.db.session.commit()
 
            
-    return render_template("view_inventory.html", inventory_table=inventory_table, weather=weather)
+    return render_template("view_inventory.html", inventory_table=inventory_table)
 
 
 if __name__ == "__main__":

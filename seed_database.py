@@ -3,21 +3,21 @@ import os
 import json
 import requests
 from pprint import pprint
-
 from model import connect_to_db, db, Inventory, Warehouse
-import model
 
 
-os.system("createdb Inventory")
-os.system("createdb Warehouse")
+# os.system("dropdb Warehouse  --if-exists")
+# os.system("createdb Warehouse")
 connect_to_db(server.app)
+db.drop_all()
 db.create_all()
 
+server.app.secret_key = "dev"
+api_key = os.environ["API_KEY"]
+api_key_2 = os.environ["API_KEY_2"]
 
 CITIES = ["Denver", "San Jose", "Philadelphia", "Atlanta", "Chicago"]
-api_key = "b61401ee0365e42673899dda2db91f00"
 limit = 1
-
 
 for city in CITIES:
 
@@ -26,6 +26,10 @@ for city in CITIES:
     lat = location[0]["lat"]
     lon = location[0]["lon"]
 
-    c = model.Warehouse(name=city, lat=lat, lon=lon)
-    model.db.session.add(c)
-    model.db.session.commit()
+    weather = requests.get(f'https://api.openweathermap.org/data/2.5/weather?lat={lat}&lon={lon}&appid={api_key_2}')
+    response = weather.json()
+    description = response['weather'][0]['description']
+
+    c = Warehouse(name=city, lat=lat, lon=lon, weather=description)
+    db.session.add(c)
+    db.session.commit()
