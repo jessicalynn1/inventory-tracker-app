@@ -1,20 +1,17 @@
 import server
+import model
 import os
 import json
 import requests
 from pprint import pprint
 from model import connect_to_db, db, Inventory, Warehouse
 
-
-# os.system("dropdb Warehouse  --if-exists")
-# os.system("createdb Warehouse")
 connect_to_db(server.app)
 db.drop_all()
 db.create_all()
 
-server.app.secret_key = "dev"
-api_key = os.environ["API_KEY"]
-api_key_2 = os.environ["API_KEY_2"]
+api_key = "b61401ee0365e42673899dda2db91f00"
+api_key_2 = "93b423527d6806d147c30e1558064431"
 
 CITIES = ["Denver", "San Jose", "Philadelphia", "Atlanta", "Chicago"]
 limit = 1

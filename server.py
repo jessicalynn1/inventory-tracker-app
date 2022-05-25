@@ -1,9 +1,9 @@
+import os
 from flask import (Flask, render_template, request, flash, session, redirect)
-from model import connect_to_db, db, Inventory, Warehouse
+from model import connect_to_db, db, Inventory, Warehouse, FullInventory
 import model
 
 from jinja2 import StrictUndefined
-import os
 import webbrowser
 import requests
 import json 
@@ -12,9 +12,8 @@ from pprint import pprint
 app = Flask(__name__, static_url_path='/static') 
 app.secret_key = "dev"
 app.jinja_env.undefined = StrictUndefined
-api_key = os.environ["API_KEY"]
-api_key_2 = os.environ["API_KEY_2"]
-
+api_key = "b61401ee0365e42673899dda2db91f00"
+api_key_2 = "93b423527d6806d147c30e1558064431"
 
 @app.route("/")
 def homepage():
@@ -46,7 +45,6 @@ def commit_inventory():
     new_product = Inventory(product_code=product_code, name=name, description=description, quantity=quantity, warehouse_id=warehouse_id.id)
     db.session.add(new_product)
     db.session.commit()
-
 
     return redirect("/")
 
@@ -143,8 +141,10 @@ def view_inventory():
     
 
     inventory_table = Inventory.query.all()
+    full_inventory_lst = []
     
     for obj in inventory_table:
+        product_name = obj.name
         city_name = obj.warehouse.name
         lat = obj.warehouse.lat
         lon = obj.warehouse.lon
@@ -152,30 +152,29 @@ def view_inventory():
         weather = requests.get(f'https://api.openweathermap.org/data/2.5/weather?lat={lat}&lon={lon}&appid={api_key_2}')
         response = weather.json()
         description = response['weather'][0]['description']
+        
+        x = FullInventory(product_name, city_name, description)
+        x.describe_inventory()
+        full_inventory_lst.append(x)
 
-        model.Warehouse.query.filter_by(name=city_name).update(dict(weather=description))
-        model.db.session.commit()
+        # if i wanted to use a list of dictionaries, use code below
+        # x = {}
+        # x['inventory_name'] = product_name
+        # x['warehouse_name'] = city_name
+        # x['weather'] = description
 
+        # if i wanted to hard code the weather in the warehouse table
+        # model.Warehouse.query.filter_by(name=city_name).update(dict(weather=description))
+        # model.db.session.commit()
            
-    return render_template("view_inventory.html", inventory_table=inventory_table)
+    return render_template("view_inventory.html", full_inventory_lst=full_inventory_lst)
 
 
 if __name__ == "__main__":
+    os.system("createdb inventory")
     connect_to_db(app)
+    db.create_all()
     app.run(host="0.0.0.0", debug=True)
 
 
 
-
-#Tried to use a class to connect the city with the inventory item and the weather
-        
-    # class FullInventory:
-    #     """Creates an object that has information from both inventory table and warehouse table."""
-    #     def __init__(self, product_name, city_name, description):
-
-    #         self.pname = product_name
-    #         self.cname = city_name
-    #         self.desc = description
-        
-    #     def create_instance(self):
-    #         """Puts all the info into one object"""

@@ -5,8 +5,8 @@
 <section id="inventory-list">
     <h1>List of inventory items</h1>
     <ul id="inventory-list">
-      {% for item in inventory_table %}
-      <li> {{ item.name }} located in {{ item.warehouse.name }}; current weather is: {{ item.warehouse.weather }} </li>
+      {% for item in full_inventory_lst %}
+      <li> {{ item.inventory_name }} located in {{ item.warehouse_name }}; current weather is: {{ item.weather }} </li>
       {% endfor %}
   </section>
 

@@ -26,6 +26,19 @@ class Inventory(db.Model):
         return f'<Inventory product_code={self.product_code} name={self.name} quantity={self.quantity}>'
 
 
+class FullInventory:
+    """Creates an object that has information from both inventory table and warehouse table."""
+    def __init__(self, inventory_name, warehouse_name, weather):
+
+        self.inventory_name = inventory_name
+        self.warehouse_name = warehouse_name
+        self.weather = weather
+
+    def describe_inventory(self):
+
+        print(f"Your current weather is {self.weather}")
+
+
 class Warehouse(db.Model):
     """Table to keep track of warehouses"""
 
@@ -42,6 +55,7 @@ class Warehouse(db.Model):
 
     def __repr__(self):
         return f'<Warehouse name={self.name} lat={self.lat} lon={self.lon}>'
+
 
 
 
