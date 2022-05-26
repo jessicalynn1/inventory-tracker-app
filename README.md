@@ -49,17 +49,19 @@ Database:
 ## Getting Started  
 Please read through and follow the steps below to get the app running.
 To download and use Chris's Custom Designs please follow these instructions:
-1. Clone repository: https://github.com/jessicalynn1/inventory-tracker-app
-2. Create a virtual environment: $ virtualenv env
-3. Install dependencies: $ pip3 install -r requirements.txt
+1. Clone repository: 
+    https://github.com/jessicalynn1/inventory-tracker-app
+2. Create a virtual environment: 
+    $ virtualenv env
+3. Install dependencies: 
+    $ pip3 install -r requirements.txt
 4. Build database tables and fill database with seed file: 
-$ python3 model.py
-$ python3 seed_database.py
+    $ python3 model.py
+    $ python3 seed_database.py
 
 
 ## View on Replit
-
-You can find this app on Replit here: https://replit.com/@JessicaF1/inventory-tracker-app-1#main.py
+You can find this app on Replit here: https://replit.com/@JessicaF1/inventory-tracker-app-2#main.py
 
 
 ## Coming Soon...
